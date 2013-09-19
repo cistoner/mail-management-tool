@@ -9,8 +9,13 @@ features: <br>
 	
 	
 	extra info
-	objective of this application will be to provide an open source solution to handle bunch of email subscribers one have for their website!
+	
+	objective of this application will be to provide an open source solution to handle bunch of email
+	subscribers one have for their website!
+	
+	
 These are certain points we have thought of: 
+
 > With this tool webmasters would be able to easily manage their email subscribers, add,sort or remove them to groups so that they can send bulk emails depending upon groups or to all of them.
 > This application should be able to easily integrate with existing database of email subscribers if they maintain any. 
 > Admins should be able to add further sub admins or admins and add or modify permissions to them. We shall use rbac model here
