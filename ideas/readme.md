@@ -11,3 +11,10 @@ Placeholder for all features here:
 >Sync existing tables to our tables<br>
 >ADE new destination email ids to groups<br>
 
+2.Installation: 
+<br>data for installation here
+
+
+3.Main tool feature:
+<br>data of list of main features here
+
