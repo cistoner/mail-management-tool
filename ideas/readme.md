@@ -26,18 +26,19 @@ some premium option :<br>
 3.Installation: 
 <br>data for installation here<br>
 Installation page include three steps:<br>
+
 >Info<br>
->>Display info about our product with terms and conditions<br>
+>Display info about our product with terms and conditions<br>
 >Details<br>
 Get following details from user-<br>
->>host <br>
->>dbusername<br>
->>dbpassword<br>
->>prefix<br>
+>host <br>
+>dbusername<br>
+>dbpassword<br>
+>prefix<br>
 ---------<br>
->>username for login<br>
->>password for login<br>
->>email for reset<br>
+>username for login<br>
+>password for login<br>
+>email for reset<br>
 >Feedback form<br>
 
 Then delete installation files<br>
