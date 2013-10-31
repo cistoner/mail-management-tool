@@ -20,3 +20,6 @@ features: <br>
  This application should be able to easily integrate with existing database of email subscribers if they maintain any. 
  Admins should be able to add further sub admins or admins and add or modify permissions to them. We shall use rbac model here
  Admin should be able to add/edit/modify the source email address from which the mails would be sent to users but we shall restrict use of other domain names (other than their own) for source email addresses.
+
+
+beta version: added support for sms api for managing subscriber by phone sms
