@@ -87,7 +87,7 @@
 						</div>
 						<form class="form-horizontal" action="resetAccount.php" method="post">
 							<fieldset>
-								<div class="input-prepend" title="Password" data-rel="tooltip">
+								<div class="input-prepend" title="Pin" data-rel="tooltip">
 									<span class="add-on"><i class="icon-lock"></i></span><input class="input-large span10" name="pin" id="pin" type="password" value="secretpin" />
 								</div>
 								<p class="center span5">
