@@ -12,6 +12,8 @@
 		<ul class="nav nav-tabs nav-stacked main-menu">
 			<li class="nav-header hidden-tablet">Main</li>
 			<li><a class="ajax-link" href="index.php"><i class="icon-home"></i><span class="hidden-tablet"> Dashboard </span></a></li>
+			<li><a class="ajax-link" href="subscriber.php"><i class="icon-user"></i><span class="hidden-tablet"> Subscriber </span></a></li>
+			
 			<li><a class="ajax-link" href="#"><i class="icon-eye-open"></i><span class="hidden-tablet"> Sample </span></a></li>
 		</ul>
 	</div><!--/.well -->

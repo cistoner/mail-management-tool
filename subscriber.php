@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Mail Management Tool</title>
+	<title>MMT subscribers</title>
 	<link id="bs-css" href="css/bootstrap-cerulean.css" rel="stylesheet">
 	<style type="text/css">
 	  body {
@@ -70,29 +70,80 @@
 						<a href="#">Home</a> <span class="divider">/</span>
 					</li>
 					<li>
-						<a href="#">!! Breadcrumb here !!</a>
+						<a href="#">Subscribers</a>
 					</li>
 				</ul>
 			</div>
 			<?php include 'ui_includes/displaybox.php';?>
-			
 			<div class="row-fluid">
 				<div class="box span12">
-					<div class="box-header well">
-						<h2><i class="icon-info-sign"></i> Topic </h2>
+					<div class="box-header well ">
+						<h2><i class="icon-info-sign"></i> Find subscribers by email id </h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
 						</div>
 					</div>
 					<div class="box-content">
-						<h1>Charisma <small>free, premium quality, responsive, multiple skin admin template.</small></h1>
-						<p>Its a live demo of the template. I have created Charisma to ease the repeat work I have to do on my projects. Now I re-use Charisma as a base for my admin panel work and I am sharing it with you :)</p>
-						<p><b>All pages in the menu are functional, take a look at all, please share this with your followers.</b></p>
+						<form action="" method="post">
+							<div class="input-append">
+									<input id="appendedInputButton subs_search" name="subs_search" size="16" type="text">
+									<button class="btn" type="button">Search!</button>
+							</div>	
+						</form>
 						
 						
 						<div class="clearfix"></div>
 					</div>
 				</div>
+			</div>
+			<div class="row-fluid ">		
+				<div class="box span12">
+					<div class="box-header well" data-original-title="">
+						<h2><i class="icon-user"></i> Subscribers</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid">
+						<div class="row-fluid">
+						<table class="table table-striped table-bordered bootstrap-datatable datatable dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+						  <thead>
+							<tr role="row">
+								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 201px;">Email</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending" style="width: 199px;">Date registered</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 96px;">Groups</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 378px;">Actions</th>
+							</tr>
+						  </thead>   
+						  
+					  <tbody role="alert" aria-live="polite" aria-relevant="all"><tr class="odd">
+								<td class=" sorting_1">minhazav@gmail.com</td>
+								<td class="center ">2012/02/01 23:23:23</td>
+								<td class="center ">
+									<span class="label label-important">participants</span>
+								</td>
+								<td class="center ">
+									<a class="btn btn-info" href="#">
+										<i class="icon-edit icon-white"></i>  
+										Edit                                            
+									</a>
+									<a class="btn btn-danger" href="#">
+										<i class="icon-trash icon-white"></i> 
+										Remove from groups
+									</a>
+									<a class="btn btn-danger" href="#">
+										<i class="icon-trash icon-white"></i> 
+										Delete
+									</a>
+								</td>
+							</tr>
+						</tbody>
+						</table>
+					</div>            
+					</div>
+				</div><!--/span-->
+			
 			</div>
 				
 		<hr>
