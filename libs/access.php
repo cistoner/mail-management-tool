@@ -20,6 +20,7 @@ class access
 {
 	private $userId = null;
 	private $isSessionSetVar = false;
+	//public $accessLevel = Array(); //to be used later if its better
 	/**
 	 * constructor
 	 * @param: user id as int
@@ -76,9 +77,12 @@ class access
 			throw new noAccess('User does not have any access. Program cannot continue');
 			return;
 		}
+		$_SESSION['ACCESS'] = Array();
 		while( $row = mysql_fetch_array($query) )
 		{
 			$_SESSION['ACCESS'][$row['access']] = true;
+			//$this->accessLevel[$row['access']] = true;
+			//for direct usage from class object
 		}
 		$_SESSION['ACCESS_DATA'] = true;
 		return;
