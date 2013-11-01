@@ -2,7 +2,7 @@
 /**
  * this library will be used to load access data to session as well
  * as to check certain access rules
- * dependency: db library. database should be coonected
+ * dependency: db library, error library database should be coonected
  */
  
  //======================================================\\
@@ -10,9 +10,8 @@
  /**
   * Exception to handle Invalid userid
   */
-class NullUserId extends Exception { }
-class dbError extends Exception { }
-class noAccess extends Exception { }
+class NullUserId extends Exception { };
+class noAccess extends Exception { };
 /**
  * Actual access class to handle user access
  */
