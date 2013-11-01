@@ -12,7 +12,7 @@
 ?>
 <footer>
 	<p class="pull-left">
-		Product by <a href="http://cistoner.com"> Cistoner Inc </a>&copy; 2012-13 And Theme by 
-	 	<a href="http://usman.it" target="_blank">Muhammad Usman</a> 2012
+		Powered by <a href="http://cistoner.com"> Cistoner Inc </a>&copy; 2012-13 And <cite>Theme by 
+	 	<a href="http://usman.it" target="_blank">Muhammad Usman</a> 2012</cite>
 	</p>
 </footer>
