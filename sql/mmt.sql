@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2013 at 04:52 PM
+-- Generation Time: Nov 01, 2013 at 05:09 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -72,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `last_activity` int(10) NOT NULL,
   `last_login` int(10) NOT NULL,
   `level` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
