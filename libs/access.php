@@ -51,7 +51,7 @@ class access
 		if( $this->userId == null || $this->userId == "" )
 			 throw new NullUserId('UserId cannot be null!');
 		$query = mysql_query("SELECT acl.access FROM useraccess 
-								INNERJOIN acl ON acl.accessId = useraccess.accessId
+								INNER JOIN acl ON acl.accessId = useraccess.accessId
 								WHERE userId = '" .$this->userId ."'");
 		if(!$query)
 		{
