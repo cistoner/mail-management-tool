@@ -76,7 +76,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
 	}
 	catch (InvalidUsername $ex)
 	{
-		log::saveLog("INVALID CAHRS IN PASSWORD");
+		log::saveLog("INVALID CAHRS IN USERNAME");
 		login::increaseFailureCount();
 		dbase::close_connection();	
 		header("location: ../login.php?message=invalid+chars+password&success=false");
