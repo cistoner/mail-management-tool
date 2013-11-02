@@ -1,6 +1,6 @@
 <?php
 /**
- * this library will be used to load access data to session as well
+ * this library will be used to load access data to object of this class as well
  * as to check certain access rules
  * dependency: db library, error library database should be coonected
  */
@@ -23,8 +23,8 @@ class noAccess extends Exception { };
 class access
 {
 	private $userId = null;
-	private $isSessionSetVar = false;
-	//public $accessLevel = Array(); //to be used later if its better
+	public $accessLevel = Array(); 
+	
 	/**
 	 * constructor
 	 * @param: user id as int
@@ -39,26 +39,8 @@ class access
 		 */
 		$this->userId = $id;
 		
-		if($this->checkSession()) $isSessionSetVar = true;
 	}
-	/**
-	 * function to check if ACCESS data is set in session already
-	 */
-	private function checkSession()
-	{
-		if( isset($_SESSION['ACCESS_DATA']) && ($_SESSION['ACCESS_DATA'] === true) ) return true;
-		return false;
-	}
-	
-	/** 
-	 * this function returns if session is already set or 
-	 *  need to be fetched
-	 */
-	public function isSessionSet()
-	{
-		return $this->isSessionSetVar;
-	}
-	
+		
 	/**
 	 * this function fetches the user access from db
 	 * and save it to session so that it can be accessed by 
@@ -84,11 +66,8 @@ class access
 		$_SESSION['ACCESS'] = Array();
 		while( $row = mysql_fetch_array($query) )
 		{
-			$_SESSION['ACCESS'][$row['access']] = true;
-			//$this->accessLevel[$row['access']] = true;
-			//for direct usage from class object
+			$this->accessLevel[$row['access']] = true;
 		}
-		$_SESSION['ACCESS_DATA'] = true;
 		return;
 	}
 
