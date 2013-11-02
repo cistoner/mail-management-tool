@@ -63,7 +63,6 @@ class access
 			throw new noAccess('User does not have any access. Program cannot continue');
 			return;
 		}
-		$_SESSION['ACCESS'] = Array();
 		while( $row = mysql_fetch_array($query) )
 		{
 			$this->accessLevel[$row['access']] = true;

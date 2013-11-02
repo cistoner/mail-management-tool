@@ -1,5 +1,16 @@
 <?php
 	include 'include_this.php';
+	/**
+	 * task: get list of subscribers from db
+	 */
+	$subsObj = new subscribers(20,1);
+	/**
+	 * this function retrieves the subscriber list and store it to the array
+	 * which can be used anywhere
+	 */
+	$subsObj->getSubscribers();
+	
+	dbase::close_connection();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,7 +118,7 @@
 					<div class="box-content">
 						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid">
 						<div class="row-fluid">
-						<table class="table table-striped table-bordered bootstrap-datatable datatable dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+						<table class="table table-striped table-bordered   " id="" aria-describedby="">
 						  <thead>
 							<tr role="row">
 								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 201px;">Email</th>
@@ -117,27 +128,66 @@
 							</tr>
 						  </thead>   
 						  
-					  <tbody role="alert" aria-live="polite" aria-relevant="all"><tr class="odd">
-								<td class=" sorting_1">minhazav@gmail.com</td>
-								<td class="center ">2012/02/01 23:23:23</td>
-								<td class="center ">
-									<span class="label label-important">participants</span>
-								</td>
-								<td class="center ">
+					  <tbody role="alert" aria-live="polite" aria-relevant="all">
+					  <?php 
+					  	$len = count($subsObj->subs);
+					  	for($i = 0; $i<$len; $i++)
+					  	{
+					  		echo '<tr class="odd">';
+					  		echo "<td class='sorting_'>" .$subsObj->subs[$i]['email'] ."</td>";
+					  		echo "<td class='center'>" .$subsObj->subs[$i]['date'] ."</td>";
+					  		echo "<td class='center '>";
+					  		$nos = count($subsObj->subs[$i]['group']);
+					  		for($j = 0; $j<$nos; $j++)
+					  		{
+					  			echo "<span class='label label-important'>" .$subsObj->subs[$i]['group'][$j]['gp_name'] ."</span> ";
+					  		}
+							echo "</td>";
+					  		?>
+					  		<td class="center ">
+					  				<?php 
+										if(isset($accessObj->accessLevel['email-E']))
+										{
+									?>
 									<a class="btn btn-info" href="#">
 										<i class="icon-edit icon-white"></i>  
 										Edit                                            
 									</a>
+									<?php 
+										}
+										if(isset($accessObj->accessLevel['group-AE']))
+										{
+									?>
+									<a class="btn btn-info" href="#">
+										<i class="icon-edit icon-white"></i>  
+										Add group                                           
+									</a>
+									<?php 
+					  					}
+										if(isset($accessObj->accessLevel['group-RE']))
+										{
+									?>
 									<a class="btn btn-danger" href="#">
 										<i class="icon-trash icon-white"></i> 
 										Remove from groups
 									</a>
-									<a class="btn btn-danger" href="#">
-										<i class="icon-trash icon-white"></i> 
-										Delete
-									</a>
-								</td>
-							</tr>
+									<?php
+										} 
+										if(isset($accessObj->accessLevel['email-D']))
+										{
+									?>
+										<a class="btn btn-danger" href="#">
+											<i class="icon-trash icon-white"></i> 
+											Delete
+										</a>
+									<?php } ?>
+							</td>
+					  		<?php 
+					  		echo '</tr>';
+					  	}
+					  
+					  ?>
+							
 						</tbody>
 						</table>
 					</div>            

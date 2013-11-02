@@ -134,4 +134,13 @@ else
 }
 
 include 'libs/subscriber.php';
+include 'libs/mail.php';
+/**
+ * varables to maintain
+ * > total count of subscribers
+ * > total no of mails sent
+ */
+$subscribersCount = subscribers::getSubscribersCount();
+$sentMailCount = mail::getSentMailCount();
+
 ?>
