@@ -1,3 +1,11 @@
+<?php
+	session_start();
+	include 'config/config.php';
+	include 'libs/error.php';
+	include 'libs/db.php';
+	include 'libs/login.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
