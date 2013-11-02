@@ -1,10 +1,71 @@
 <?php
 	session_start();
+	$checkVar = true;
 	include 'config/config.php';
 	include 'libs/error.php';
 	include 'libs/db.php';
 	include 'libs/login.php';
-
+	/** 
+	 * code to check if session already exists 
+	 * and redirect to index.php if it passes authentication result
+	 * or clear session in case of failed authentication
+	 */
+	if( doesSessionAlreadyExists() )
+	{
+		$status = null;
+		dbase::start_connection();
+		try
+		{
+			
+			$status = login::authenticate($_SESSION[username_key],$_SESSION[password_key]);
+			
+		}
+		catch(dbError $ex)
+		{
+			/** 
+		 	 * for debugging: shall be changed to some action later
+			 */
+			echo $ex->getMessage();
+			exit;
+		}
+		catch(Exception $ex)
+		{
+			if(isset($_SESSION[username_key])) unset($_SESSION[username_key]);
+			if(isset($_SESSION[password_key])) unset($_SESSION[password_key]);
+			header("location: login.php?message=sesion+expired");
+			exit;
+		}
+		switch($status)
+		{
+			case 0:	clearSession(); break;
+			case 1:	clearSession(); break;
+			case 2: header("location: index.php");exit;
+			break;
+		}
+		dbase::close_connection();
+	}
+	
+	/**
+	 * code to decide weather to show captcha or not
+	 * depending upon no of failed login
+	 */
+	$showCaptcha = false;
+	if(isset($_SESSION['failure']) && $_SESSION['failure'] > login::$maxInvalidAttempts)
+	{
+		$showCaptcha = true;
+	}
+	
+	/**
+	 * code to decide weather login failed
+	 */
+	$hasLoginFailed = false;
+	$errorMessage = null;
+	if(isset($_GET['success']) && $_GET['success'] == 'false')
+	{
+		$hasLoginFailed = true;
+		$errorMessage = "Invalid Username or Password";
+		if(isset($_GET['message'])) $errorMessage = $_GET['message'];
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,18 +124,38 @@
 					<div class="alert alert-info">
 						Please login with your Username and Password.
 					</div>
-					<form class="form-horizontal" action="login.php" method="post">
+					
+						<?php 
+						if($hasLoginFailed){
+						?>
+						<div class="alert alert-info">
+							<strong style='color: red'><?php echo $errorMessage; ?></strong>
+						</div>
+						<?php } ?>
+					
+					<form class="form-horizontal" action="secure/processlogin.php" method="post">
 						<fieldset>
 							<div class="input-prepend" title="Username" data-rel="tooltip">
-								<span class="add-on"><i class="icon-user"></i></span><input autofocus class="input-large span10" name="username" id="username" type="text" value="admin" />
+								<span class="add-on"><i class="icon-user"></i></span><input required autofocus class="input-large span10" name="username" id="username" type="text" value="admin" />
 							</div>
 							<div class="clearfix"></div>
 
 							<div class="input-prepend" title="Password" data-rel="tooltip">
-								<span class="add-on"><i class="icon-lock"></i></span><input class="input-large span10" name="password" id="password" type="password" value="admin123456" />
+								<span class="add-on"><i class="icon-lock"></i></span><input  required class="input-large span10" name="password" id="password" type="password" value="admin123456" />
 							</div>
 							<div class="clearfix"></div>
-
+							<?php 
+							if($showCaptcha)
+							{
+							?>
+							<div class="alert alert-info">
+								Are you a real human?
+							</div>
+							captcha code here
+							<div class="clearfix"></div>
+							<?php 
+							}
+							?>
 							<p class="center span5">
 							<button type="submit" class="btn btn-primary">Login</button>
 							<br>
