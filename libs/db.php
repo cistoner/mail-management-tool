@@ -11,7 +11,7 @@
  * uses static functions and mysql_ fucntions
  * expects config page to be included
 */
-require_once '../configs/config.ini.php';	//contains db configuration file
+
 class dbase{
 	public static $con;
 	public static function start_connection()

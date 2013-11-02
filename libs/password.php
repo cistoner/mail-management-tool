@@ -4,6 +4,7 @@
  * BasePassword class
  * in charge of generating and determining strength of a password 
  * @author abiusx
+ * OWASP
  *
  */
 class BasePassword 
