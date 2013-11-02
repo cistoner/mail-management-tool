@@ -1,5 +1,7 @@
 <?php
 	include 'include_this.php';
+	
+	dbase::close_connection();
 ?>
 <!DOCTYPE html>
 <html lang="en">
