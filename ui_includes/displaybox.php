@@ -8,11 +8,16 @@
  */
 ?>
 <div class="sortable row-fluid">
-	<a data-rel="tooltip" title="6 new members." class="well span3 top-block" href="#">
+	<a data-rel="tooltip" title="<?php echo $subscribersCount; ?> subscribers" class="well span3 top-block" href="#">
 		<span class="icon32 icon-red icon-user"></span>
 		<div>Total Subscribers</div>
-		<div>507</div>
-		<span class="notification">6</span>
+		<div><?php echo $subscribersCount; ?></div>
+	</a>
+	<a data-rel="tooltip" title="<?php echo $sentMailCount; ?> mails sent till date" class="well span3 top-block" href="#">
+		<span class="icon32 icon-color icon-cart"></span>
+		<div>Mails Sent</div>
+		<div><?php echo $sentMailCount; ?></div>
+		<span class="notification yellow"><?php echo $sentMailCount; ?><!-- mails sent in last attempt --></span>
 	</a>
 	<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="#">
 		<span class="icon32 icon-color icon-star-on"></span>
@@ -20,13 +25,6 @@
 		<div>228</div>
 		<span class="notification green">4</span>
 	</a>
-	<a data-rel="tooltip" title="$34 new sales." class="well span3 top-block" href="#">
-		<span class="icon32 icon-color icon-cart"></span>
-		<div>Mails Sent</div>
-		<div>13320</div>
-		<span class="notification yellow">340</span>
-	</a>
-	
 	<a data-rel="tooltip" title="12 new messages." class="well span3 top-block" href="#">
 		<span class="icon32 icon-color icon-envelope-closed"></span>
 		<div>Queries</div>

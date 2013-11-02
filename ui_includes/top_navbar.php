@@ -38,7 +38,7 @@
 	<!-- theme selector ends -->	
 	<!-- user dropdown starts -->
 		<div class="btn-group pull-right">
-			<a class="btn" href="logout.php">
+			<a class="btn" href="secure/logout.php">
 				<i class="icon-user"></i>
 				<span class="hidden-phone"> logout </span>
 			</a>
