@@ -30,7 +30,12 @@ class login
 	 * Maimum wrong attempts after which captcha should be 
 	 * thrown to users
 	 */
-	public static $maxInvalidAttempts = 6;
+	public static $maxInvalidAttempts = 5;
+	
+	/**
+	 * time after which a session should expire if not used
+	 */
+	public static $sessionTimeout = 1200;	//12 minutes
 	
 	/**
 	 * Function to increase the count of 
