@@ -22,6 +22,26 @@ class login
 	private $id;	
 	
 	/**
+	 * Maimum wrong attempts after which captcha should be 
+	 * thrown to users
+	 */
+	public static $maxInvalidAttempts = 6;
+	
+	/**
+	 * Function to increase the count of 
+	 * login failure count by one in session
+	 */
+	public static function increaseFailureCount()
+	{
+		if(!isset($_SESSION['failure']))
+		{
+			$_SESSION['failure'] = 1;
+			return;	
+		}
+		$_SESSION['failure'] = $_SESSION['failure'] + 1;
+	}
+	
+	/**
 	 * function to return filtered data 
 	 * after passing it through a regex filter
 	 */

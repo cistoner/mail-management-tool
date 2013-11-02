@@ -5,8 +5,31 @@
  * logs should have a certain nomenclature so that user can upload it to 
  * cistoner secured server to check for corrections!
  * log file should to inaccesible to any one outside 
- * dependency: db library, error library
+ * dependency: db library
+ * 
  */
  
+ class log
+ {
+
+ 	/**
+ 	 * function to save log to database
+ 	 * @param string $log
+ 	 */
+ 	public static function saveLog($log)
+ 	{
+ 	  	$filename = __FILE__;
+ 	  	$time = time();
+ 	  	$query = mysql_query("INSERT INTO `log`(`data`, `filename`, `time`) 
+ 	  	VALUES ('$log','$filename','$time')");
+ 	  	if(!$query)
+ 	  	{
+ 	  		throw new dbError(mysql_error());
+ 	  		return false;
+ 	  	}
+ 	  	return true;
+ 	}
+ 	
+ };
  
  ?>
