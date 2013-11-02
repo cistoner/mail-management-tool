@@ -5,8 +5,14 @@
  * we shall be using mysql_ functions instead of mysqli_ functions for now
  * shall change later 
  * @author: minhaz
- *
- *
+ */
+if(!isset($checkVar)) 
+{
+	header("location: ../../index.php");
+	exit;
+}
+
+/**
  * class dbase: handles database connection and disconnecion operation
  * uses static functions and mysql_ fucntions
  * expects config page to be included

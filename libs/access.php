@@ -4,6 +4,11 @@
  * as to check certain access rules
  * dependency: db library, error library database should be coonected
  */
+if(!isset($checkVar)) 
+{
+	header("location: ../../index.php");
+	exit;
+}
  
  //======================================================\\
  

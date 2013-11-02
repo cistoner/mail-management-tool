@@ -4,5 +4,10 @@
  * and other required features
  * dependency: db library
  */
+if(!isset($checkVar)) 
+{
+	header("location: ../../index.php");
+	exit;
+}
 
 ?>

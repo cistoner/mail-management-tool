@@ -4,5 +4,11 @@
  * tool to a server
  * dependency: db library
  * error library
-*/
+ */
+if(!isset($checkVar)) 
+{
+	header("location: ../../index.php");
+	exit;
+}
+
 ?>

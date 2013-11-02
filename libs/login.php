@@ -4,6 +4,11 @@
  * few of the functins can be from OWASP PHPsec project
  * dependency: db library, error library
  */
+if(!isset($checkVar)) 
+{
+	header("location: ../../index.php");
+	exit;
+}
 
 class InvalidUsername extends Exception {};
 class InvalidPassword extends Exception {};

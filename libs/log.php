@@ -8,7 +8,12 @@
  * dependency: db library
  * 
  */
- 
+if(!isset($checkVar)) 
+{
+	header("location: ../../index.php");
+	exit;
+}
+
  class log
  {
 

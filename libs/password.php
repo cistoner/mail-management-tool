@@ -7,6 +7,12 @@
  * OWASP
  *
  */
+if(!isset($checkVar)) 
+{
+	header("location: ../../index.php");
+	exit;
+}
+
 class BasePassword 
 {
 	/**
