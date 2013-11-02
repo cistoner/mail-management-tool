@@ -105,7 +105,7 @@ else
 		unset($_SESSION[password_key]);
 		session_destroy();
 		dbase::close_connection();	
-		header("location: login.php?message=user+does+not+exist+anymore&success=false");
+		header("location: login.php?message=session+timeout!++please+login+again&success=false");
 		exit;	
 	}
 	
@@ -132,4 +132,6 @@ else
 		/* do nothig for now */		
 	}
 }
+
+include 'libs/subscriber.php';
 ?>
