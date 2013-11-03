@@ -33,9 +33,29 @@ class subscribers
 		$this->offset = ($this->page - 1) * ($this->limit);
 	}
 	
-	public function getSubscribers()
+	/**
+	 * function to change value of limit and page
+	 */
+	 public function changeData($l = 10,$p = 1)
+	 {
+		$this->page = $p;
+		$this->limit = $l;
+		$this->offset = ($this->page - 1) * ($this->limit);
+	 }
+	 
+	public function getSubscribers($key = false)
 	{
-		$query = mysql_query("SELECT * FROM subscribers LIMIT $this->limit OFFSET $this->offset");
+		/**
+		 * in case a search has been made 
+		 * for a particular email id
+		 */
+		$prefix = "";
+		if($key)
+		{
+			$prefix = "WHERE email LIKE %" .$key ."%";
+		}
+		
+		$query = mysql_query("SELECT * FROM subscribers " .$prefix ."LIMIT $this->limit OFFSET $this->offset");
 		while($row = mysql_fetch_array($query))
 		{
 			$index = count($this->subs);
