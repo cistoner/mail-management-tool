@@ -91,5 +91,24 @@ class subscribers
 		$row = mysql_fetch_array($query);
 		return ($row[0]);
 	}
+	
+	/**
+	 * function to get latest subscribers from db
+	 * default =  10 subscribers
+	 * return type: array of string
+	 */
+	 public static function getLatestSubscribers($no = 10)
+	 {
+		$query = mysql_query("SELECT email,date FROM subscribers ORDER BY date DESC LIMIT $no;");
+		$arr = array();
+		while($row = mysql_fetch_array($query))
+		{
+			$index = count($arr);
+			$arr[$index] = array();
+			$arr[$index]['email'] = $row['email'];
+			$arr[$index]['date'] = date("dS F'y",$row['date']);
+		}
+		return $arr;
+	 }
 };
  
