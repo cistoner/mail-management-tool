@@ -128,8 +128,8 @@
 						<?php 
 						if($hasLoginFailed){
 						?>
-						<div class="alert alert-info">
-							<strong style='color: red'><?php echo $errorMessage; ?></strong>
+						<div class="alert alert-error">
+							<?php echo $errorMessage; ?>
 						</div>
 						<?php } ?>
 					
