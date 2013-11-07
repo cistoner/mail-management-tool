@@ -10,6 +10,11 @@
 	 */
 	$subsObj->getSubscribers();
 	
+	/**
+	 * function to get latest 10 subscribers
+	 */
+	$latestSubs = subscribers::getLatestSubscribers();
+
 	dbase::close_connection();
 ?>
 <!DOCTYPE html>
@@ -50,7 +55,6 @@
 
 	<!-- The fav icon -->
 	<link rel="shortcut icon" href="img/favicon.ico">
-		
 </head>
 
 <body>
@@ -87,23 +91,62 @@
 			</div>
 			<?php include 'ui_includes/displaybox.php';?>
 			<div class="row-fluid">
-				<div class="box span12">
-					<div class="box-header well ">
-						<h2><i class="icon-info-sign"></i> Find subscribers by email id </h2>
+				<div class="box span4">
+					<div class="box-header well" data-original-title="">
+						<h2><i class="icon-user"></i> Add subscribers manually</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
 						</div>
 					</div>
 					<div class="box-content">
-						<form action="" method="post">
+						<div class="box-content">
+							<form action="javascript: addEmail();return false;" method="post">
 							<div class="input-append">
-									<input id="appendedInputButton subs_search" name="subs_search" size="16" type="text">
-									<button class="btn" type="button">Search!</button>
+									<input type="checkbox" name='sendMail' id='sendMail'> Send subscription mail
+									<br><br>
+									<input placeholder='someone@example.com' id="addEmailid" name="subs_search" size="16" type="email" required>
+									<button class="btn" type="button" onclick="this.form.submit()">Add!</button>
 							</div>	
 						</form>
-						
-						
-						<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+				<div class="box span4">
+					<div class="box-header well" data-original-title="">
+						<h2><i class="icon-user"></i>Latest subscribets </h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+						<div class="box-content">
+							<?php
+								$len = count($latestSubs);
+								for($i = 0;$i<$len;$i++)
+								{
+									echo " " .$latestSubs[$i]['email'] ." &nbsp;<span class='label label-info'> " .$latestSubs[$i]['date'] ." </span> <br>";
+								}
+							?>
+						</div>
+					</div>
+				</div>
+				<div class="box span4">
+					<div class="box-header well" data-original-title="">
+						<h2><i class="icon-user"></i> Subscription form</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+						<div class="box-content">
+							Just add this html code to your web pages to add 
+							<span class="label label-success"> subscribe me </span> button!
+							<br><br>
+							<textarea rows="3" style="height: 100px;width: 90%"></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -116,9 +159,20 @@
 						</div>
 					</div>
 					<div class="box-content">
+					<div class="box-content">
+						<form action="" method="post">
+							<div class="input-append">
+									<input id="appendedInputButton subs_search" name="subs_search" size="16" type="text">
+									<button class="btn" type="button">Search!</button>
+							</div>	
+						</form>
+						
+						
+						<div class="clearfix"></div>
+					</div>
 						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid">
 						<div class="row-fluid">
-						<table class="table table-striped table-bordered   " id="" aria-describedby="">
+						<table class="table table-striped table-bordered   " id="displayTable" aria-describedby="">
 						  <thead>
 							<tr role="row">
 								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 201px;">Email</th>
@@ -134,7 +188,16 @@
 					  	for($i = 0; $i<$len; $i++)
 					  	{
 					  		echo '<tr class="odd">';
-					  		echo "<td class='sorting_'>" .$subsObj->subs[$i]['email'] ."</td>";
+					  		echo "<td class='sorting_'>" .$subsObj->subs[$i]['email'];
+							/*
+							//this feature ain't needed as it is just delete this and add new a 
+							//2 second process
+							if(isset($accessObj->accessLevel['email-E']))
+							{
+								echo "&nbsp;&nbsp;<a href='#edit' style='display: none' class='hiddenlink'>edit</a>";
+							}
+							*/
+							echo "</td>";
 					  		echo "<td class='center'>" .$subsObj->subs[$i]['date'] ."</td>";
 					  		echo "<td class='center '>";
 					  		$nos = count($subsObj->subs[$i]['group']);
@@ -145,22 +208,13 @@
 							echo "</td>";
 					  		?>
 					  		<td class="center ">
-					  				<?php 
-										if(isset($accessObj->accessLevel['email-E']))
-										{
-									?>
-									<a class="btn btn-info" href="#">
-										<i class="icon-edit icon-white"></i>  
-										Edit                                            
-									</a>
-									<?php 
-										}
+					  				<?php
 										if(isset($accessObj->accessLevel['group-AE']))
 										{
 									?>
 									<a class="btn btn-info" href="#">
-										<i class="icon-edit icon-white"></i>  
-										Add group                                           
+										<i class="icon-plus icon-white"></i>  
+										Add to group                                           
 									</a>
 									<?php 
 					  					}
@@ -177,7 +231,7 @@
 										{
 									?>
 										<a class="btn btn-danger" href="#">
-											<i class="icon-trash icon-white"></i> 
+											<i class="icon-fire icon-white"></i> 
 											Delete
 										</a>
 									<?php } ?>
@@ -220,8 +274,7 @@
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 
-	<!-- jQuery -->
-	<script src="js/jquery-1.7.2.min.js"></script>
+	
 	<!-- jQuery UI -->
 	<script src="js/jquery-ui-1.8.21.custom.min.js"></script>
 	<!-- transition / effect library -->
