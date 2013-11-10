@@ -30,7 +30,8 @@ echo "CSQ = " .$string .newLine();
  * these two array will be used to load up
  * sent collections to arrays
  */
-$array = array();
+$arr1 = array();
+$arr2 = array();
 
 /**
  * regular expression to 
@@ -39,18 +40,28 @@ $array = array();
 $regex = "/{(.*?)}/i";
 
 //finding first entity
-preg_match_all($regex, $string, $matches, PREG_OFFSET_CAPTURE);
-$length = count($matches[1]);
-for($i = 0; $i<$length ;$i++)
+preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE);
+if(isset($matches[1][0]))
 {
-	$array[$i] = array();
-	$arr = explode(",",$matches[1][$i][0]);
+	$arr = explode(",",$matches[1][0]);
 	$len = count($arr);
-	for($j = 0;$j<$len;$j++){$array[$i][count($array[$i])] = $arr[$j];}
+	for($i = 0;$i<$len;$i++){$arr1[count($arr1)] = $arr[$i];}
 	/**
-	 * removes extra spaces after removing the {} data
+	 * replace the existing content with 
+	 * a space in place of {} content
 	 */
-	$string = preg_replace('~\s{1,}~', ' ',str_replace($matches[0][$i],"",$string));
+	$string = preg_replace('~\s{1,}~', ' ',str_replace($matches[0][0],"",$string));
+	
+}
+
+preg_match($regex, $string, $matches, PREG_OFFSET_CAPTURE);
+if(isset($matches[1][0]))
+{
+	$arr = explode(",",$matches[1][0]);
+	$len = count($arr);
+	for($i = 0;$i<$len;$i++){$arr2[count($arr2)] = $arr[$i];}
+	$string = preg_replace('~\s{1,}~', ' ',str_replace($matches[0][0],"",$string));
+
 }
 
 /**
@@ -97,12 +108,12 @@ echo "========================================" .newLine();
 if($isDientityModel)
 {
 	$sql .= $tableName[$action ."_" .$entity1 ."_" .$entity2];
-	for($j = 0; $j < count($array[1]);$j++)
+	for($j = 0; $j < count($arr2);$j++)
 	{
-		for($i = 0;$i<count($array[0]);$i++)
+		for($i = 0;$i<count($arr1);$i++)
 		{
-			$out =  str_replace("ielem", $array[0][$i],$sql);
-			$out =  str_replace("jelem", $array[1][$j],$out);
+			$out =  str_replace("ielem", $arr1[$i],$sql);
+			$out =  str_replace("jelem", $arr2[$j],$out);
 			echo $out .newLine();
 		}
 	}
@@ -111,7 +122,7 @@ else {
 	$sql .= $tableName[$action ."_" .$entity1];
 	for($i = 0;$i<count($arr1);$i++)
 		{
-			$out =  str_replace("ielem", $array[1][$i],$sql);
+			$out =  str_replace("ielem", $arr1[$i],$sql);
 			echo $out .newLine();
 		}
 }

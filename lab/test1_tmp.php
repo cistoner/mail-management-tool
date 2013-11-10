@@ -1,23 +1,5 @@
 <?php 
-/**
- * Desclaimier: this work has been done under public licence by
- * Minhaz under Cistoner Inc. This is first direct implementation of
- * Custom Structured Query and is in a very raw form!
- * CSQ is basically a method to make client server interation smoother 
- * to make data fetching an easier task to do!
- * 
- * 
- * What this piece of code is capable of doing
- * Take in certain form of CSQ and generate corresponding SQL queries
- * WORKS FOR: ADD,EDIT,REMOVE OPEATIONS for one way and two way methods
- * 
- * Disadvantages: 
- * 1.does not work when more than one query is needed in one operation
- * 2.Currently support only Add, Edit and Delete
- * 3.Not a very standard code so it works only for a a specified server
- * 4.No exception method to detect a wrong CSQ
- * 
- */
+
 echo "========================================" .newLine();
 include 'ds.php';
 function newLine(){return "<br>" .PHP_EOL;}
