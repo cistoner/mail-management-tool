@@ -15,6 +15,8 @@ $actionDetail = array(
 	"REMOVE" => "Delete operation from database ",
 	"EDIT" => " Update operation on database "
 );
+
+
 /**
  * bug: sometime we need to fix multiple tables for one operation 
  * like in cas of removing subscriber: we need to delete corresponding data from 
