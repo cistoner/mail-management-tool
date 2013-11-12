@@ -24,7 +24,7 @@ $sqlstruct = array(
 	"REMOVE_EMAIL_GROUP" => "DELETE FROM 'group_subscriber' WHERE user_id = 'ielem' AND group_id = 'jelem';",
 	"REMOVE_GROUP" => "DELETE FROM `group` WHERE id = 'ielem';",
 	"EDIT_EMAIL_EMAIL" => "UPDATE `subscribers` SET email = 'jelem' WHERE id = 'ielem';",
-    "ADD_GROUP" => "INSERT INTO `group`(`name`, `description`, `date`, `admin_id`) VALUES (ielem ,'$time','" .$_SESSION['id'] ."');"
+    "ADD_GROUP" => "INSERT INTO `group`(`name`, `description`, `date`, `admin_id`) VALUES ( ielem ,'$time','" .$_SESSION['id'] ."');"
 );
 
 /**
@@ -40,4 +40,12 @@ $accessData = array(
     "EDIT_EMAIL_EMAIL" => "email-E",
     "ADD_GROUP" => "group-A"
 );
+
+/**
+ * feedback query db
+ */
+ $feedbackQuery = array(
+	"ADD_EMAIL" => "SELECT email FROM subscribers WHERE email = 'ielem';",
+	"ADD_GROUP" => "SELECT `id`, `name` FROM `group` ORDER BY `id` DESC LIMIT 1;"
+ );
 ?>

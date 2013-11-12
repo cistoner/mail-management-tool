@@ -96,6 +96,11 @@ while(substr($string,-1) == ' ')
 $arr = explode(" ",$string);
 
 /**
+ * output for feedback
+ */
+ 
+$output = "";	
+/**
  * giving positions to data
  */
 $action = $arr[0];		//TO-DO TASK
@@ -189,10 +194,26 @@ else {
     $sql = $sqlstruct[$index];
 	for($i = 0;$i<count($array[0]);$i++)
 		{
+			/**
+			 * for procesing the task
+			 */ 
 			$query =  str_replace("ielem", $array[0][$i],$sql);
             $query = mysql_query($query);
 			if(!$query)push(mysql_error(),$errors);
 			
+			/**
+			 * for feedback
+			 */
+			$query = str_replace("ielem",$array[0][$i],$feedbackQuery[$index]);
+			$query = mysql_query($query);
+			if(!$query)push(mysql_error(),$errors);
+			else
+			{
+				$row = mysql_fetch_array($query);
+				$len = count($row)/2;
+				for($i = 0;$i<$len;$i++){$output .= $row[$i] ."~";}
+				$output .= "^";
+			}
 		}
 }
 
@@ -200,4 +221,6 @@ else {
  * code to send the feedback from here after
  * generating it
  */
+ echo $output;
+
 ?>

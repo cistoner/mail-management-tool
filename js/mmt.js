@@ -15,14 +15,45 @@ var sendMail = false;
 function addEmail()
 {
 	var email = document.getElementById('addEmailid').value;
-	var csq = "ADD EMAIL {" +email +"}";
-	if( !validateEmail(email) ) 
+	var multiple = document.getElementById('addMultEmail').value;
+	if(!email.length && !multiple.length)
 	{
 		$("#addEmailid").attr("value","");
 		$("#addEmailid").attr("placeholder","enter valid email id");
 		return;
 	}
-    sendCSQ(csq,"displayTable tbody");
+	if(email.length)
+	{
+		if( !validateEmail(email) ) 
+		{
+			$("#addEmailid").attr("value","");
+			$("#addEmailid").attr("placeholder","enter valid email id");
+			return;
+		}
+		var csq = "ADD EMAIL {" +email +"}";
+	}
+	else if(multiple.length)
+	{
+		var emails = multiple.split(',');
+		var i = 0;
+		for(i = 0;i < emails.length;i++)
+		{
+			if(!validateEmail(emails[i]))
+			{
+				$("#addMultEmail").html("");
+				$("#addMultEmail").attr("placeholder","Some of the email were invalid");
+				return;
+			}
+		}
+		while(multiple[multiple.length-1] == ',')
+		{
+			multiple = multiple.substr(0,multiple.length-2);
+		}
+		var csq = "ADD EMAIL {" +multiple +"}";
+	}
+	
+    var feedback = sendCSQ(csq,"displayTable tbody",4);
+	
 }
 
 /**
@@ -45,16 +76,17 @@ function addGroup()
         desc = desc.replace("~&","\~\&");
     }
     var csq = "ADD GROUP {'" +grp +"'~&'" +desc +"'}";
-    sendCSQ(csq,"displayTable tbody");
+    sendCSQ(csq,"displaytablebody",6);
 }
 
 /**
  * function to send the csq to server
  * and retrieve the feedback
  */
-function sendCSQ(csq,outputid)
+function sendCSQ(csq,outputid,cols)
 {
-    $.post("secure/ajaxserver.php",
+    var data;
+	$.post("secure/ajaxserver.php",
         {
             csq: csq
         },
@@ -66,13 +98,37 @@ function sendCSQ(csq,outputid)
                  */
                 if(result == -1 || result == "-1") window.location.href = 'login.php?success=false&message=login+first+to+continue';
                 else if(result == -2 || result == "-2") alert("You do not have access to do this!");
-                else if(result == 13 }} result == "13")alert("You do not have access to do this!");
+                else if(result == 13 || result == "13")alert("You do not have access to do this!");
                 else
                 {
                     /**
                      * manipulate the feedback
                      */
-                    $("#" +outputid).prepend(result);
+					if(result.length)
+					{
+						var rows = result.split('^');
+						var output = "";
+						var i;
+						var j;
+						for(i = 0;i < rows.length - 1;i++)
+						{
+							var colData = rows[i].split('~');
+							output += "<tr>";
+							for(j = 0;j < cols;j++)
+							{
+								console.log(rows[i]);
+								output += "<td>";
+								if(j < colData.length - 1)
+								{
+									output += colData[j];
+								}
+								else output += " -- ";
+								output += "</td>";
+							}
+							output += "</tr>";
+						}
+						$("#" +outputid).prepend(output);
+					}
                     console.log("FEEDBACK: "+result);
                 }
             }
@@ -81,6 +137,7 @@ function sendCSQ(csq,outputid)
                 alert("Unable to connect!");
             }
         });
+	
 }
 
 /**
