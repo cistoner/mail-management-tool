@@ -9,7 +9,7 @@
 	include 'libs/groups.php';
 	$grpObj = new group();
 	$grpObj->getGroups();
-	
+
 	dbase::close_connection();
 ?>
 <!DOCTYPE html>
@@ -88,6 +88,29 @@
 			<?php include 'ui_includes/displaybox.php';?>
 			
 			<div class="row-fluid">
+				<div class="box span4">
+					<div class="box-header well" data-original-title="">
+						<h2><i class="icon-user"></i> Add Groups</h2>
+						<div class="box-icon">
+							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+						</div>
+					</div>
+					<div class="box-content">
+						<div class="box-content">
+							<form action="javascript: addGroup();return false;" method="post">
+							<div class="input-append">
+								<input placeholder="friends" id="addgrpid" name="subs_search" size="16" type="text" required>
+								<button class="btn" type="button" onclick="this.form.submit()">Add!</button>
+								<div class="clearfix"></div>
+								<br>
+								<textarea name="adddesc" id="adddesc" placeholder="Group description here ... (optional)" style="width: 90%;min-height: 100px"></textarea>
+							</div>	
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
 				<div class="box span12">
 					<div class="box-header well">
 						<h2><i class="icon-info-sign"></i> Groups </h2>
@@ -96,7 +119,7 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<table class="table table-striped table-bordered   ">
+						<table class="table table-striped table-bordered" id="displayTable">
 							<tr role="row">
 								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="group id" style="width: 201px;"> # </th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Group name" style="width: 199px;">Group Name</th>
