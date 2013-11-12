@@ -107,6 +107,10 @@
 									<br><br>
 									<input placeholder='someone@example.com' id="addEmailid" name="subs_search" size="16" type="email" required>
 									<button class="btn" type="button" onclick="this.form.submit()">Add!</button>
+									<br>
+									Add multiple emails
+									<br>
+									<textarea id='addMultEmail' style="width: 90%;min-height: 60px;" placeholder='comma seperated...' ></textarea>
 							</div>	
 						</form>
 						</div>

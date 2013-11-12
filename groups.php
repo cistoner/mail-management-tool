@@ -128,6 +128,7 @@
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Description" style="width: 378px;">Description</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions" style="width: 378px;">Action</th>
 							</tr>
+							<tbody id="displaytablebody">
 							<?php
 							$len = count($grpObj->grp);
 							if(!$len){}
@@ -146,6 +147,7 @@
 								}
 							}
 							?>
+							<tbody>
 						</table>
 						
 						
