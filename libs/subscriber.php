@@ -19,9 +19,27 @@ class subscribers
 	 * @var type multi-dimentional array
 	 */
 	public $subs = array();
-	private $offset;		//offset for downloading data
-	private $limit;		//limit of ids to be shown at a moment
-	private $page;
+	
+	/**
+	 * stores the offset
+	 * computed in contructor
+	 */ 
+	private $offset;		
+	
+	/**
+	 * limit of items to be shows in one page
+	 */
+	private $limit;		
+	
+	/** 
+	 *current active page no
+	 */
+	public $page;
+	
+	/**
+	 * total no of pages for this content
+	 */
+	public $totalPages;
 	
 	/**
 	 * constructor for the subscribers class
@@ -75,6 +93,9 @@ class subscribers
 				$this->subs[$index]['group'][$subindex]['gp_name'] = $subrow['name'];
 			}
 		}
+		$query = mysql_query("SELECT count(*) FROM subscribers " .$prefix .";");
+		$row = mysql_fetch_array($query);
+		$this->totalPages = ((int)($row[0] / $this->limit)) + 1;
 		unset($subquery);
 		unset($subrow);
 		unset($row);

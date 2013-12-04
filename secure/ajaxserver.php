@@ -8,8 +8,14 @@ $checkVar = true;
  */
 if(!isset($_POST['csq']))
 {
-    echo "1001: Insufficient parameters!";
-    exit;
+    if(isset($_POST['retrieve']) && $_POST['retrieve'] == 'true')
+	{
+		/** for normal ajax requests **/
+		include 'subajaxserver.php';
+		exit;
+	}
+	echo "1001: Insufficient parameters!";
+	exit;
 }
 
 /**

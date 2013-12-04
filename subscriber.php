@@ -157,29 +157,66 @@
 			<div class="row-fluid ">		
 				<div class="box span12">
 					<div class="box-header well" data-original-title="">
-						<h2><i class="icon-user"></i> Subscribers</h2>
+						<h2><i class="icon-user"></i> Subscribers
+							<span class="pagin_loader">
+								<img src="img/ajax-loaders/ajax-loader-7.gif">
+							</span>
+						</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
 						</div>
 					</div>
 					<div class="box-content">
 					<div class="box-content">
-						<form action="" method="post">
-							<div class="input-append">
-									<input id="appendedInputButton subs_search" name="subs_search" size="16" type="text">
-									<button class="btn" type="button">Search!</button>
-							</div>	
-						</form>
-						
+						<div class="input-append" style="display: inline;width: 30%;float: left">
+							<form action="" method="post">
+								<input id="appendedInputButton subs_search" name="subs_search" size="16" type="text">
+								<button class="btn" type="button">Search!</button>
+							</form>
+						</div>	
+						<div style="display: inline;width: 40%;float: right">
+							<?php
+							if(isset($accessObj->accessLevel['group-AE']))
+							{
+							?>
+							<a class="btn btn-info disabled" id="add_group" href="#" onclick="javascript: document.getElementById('task').value = 'ADD_GROUP';document.forms['emails'].submit();">
+								<i class="icon-plus icon-white"></i>  
+								Add to group                                           
+							</a>
+							<?php 
+							}
+							if(isset($accessObj->accessLevel['group-RE']))
+							{
+							?>
+							<a class="btn btn-danger disabled" id="remove_grp" href="#"  onclick="javascript: document.getElementById('task').value = 'REMOVE_GROUP';document.forms['emails'].submit();">
+							<i class="icon-trash icon-white"></i> 
+							Remove from groups
+							</a>
+							<?php
+							} 
+							if(isset($accessObj->accessLevel['email-D']))
+							{
+							?>
+								<a class="btn btn-danger disabled" href="#" id="delete_button" onclick="javascript: document.getElementById('task').value = 'REMOVE';document.forms['emails'].submit();">
+								<i class="icon-fire icon-white"></i> 
+								Delete
+								</a>
+							<?php } ?>
+						</div>
 						
 						<div class="clearfix"></div>
 					</div>
 						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid">
 						<div class="row-fluid">
-						<table class="table table-striped table-bordered   " id="displayTable" aria-describedby="">
+						<form name="emails" action="" id="emails" method="post" onsubmit="javascript:if(document.getElementById('task').value=='')return false;" >
+						<input type="hidden" value="" name="task" id="task">
+						<table class="table table-striped table-bordered" id="displayTable" aria-describedby="">
 						  <thead>
 							<tr role="row">
-								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 201px;">Email</th>
+								<th class="sorting_asc" style="width: 40px;">
+									<!-- <input type="checkbox" id="mailid" class="selectallcheckbox"> -->
+								</th>
+								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 201px;"> Email</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending" style="width: 199px;">Date registered</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 96px;">Groups</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 378px;">Actions</th>
@@ -192,15 +229,8 @@
 					  	for($i = 0; $i<$len; $i++)
 					  	{
 					  		echo '<tr class="odd">';
+							echo "<td><input type='checkbox' name='id[]' id='mailid' class='select' value='" .$subsObj->subs[$i]['id'] ."'></td>";
 					  		echo "<td class='sorting_'>" .$subsObj->subs[$i]['email'];
-							/*
-							//this feature ain't needed as it is just delete this and add new a 
-							//2 second process
-							if(isset($accessObj->accessLevel['email-E']))
-							{
-								echo "&nbsp;&nbsp;<a href='#edit' style='display: none' class='hiddenlink'>edit</a>";
-							}
-							*/
 							echo "</td>";
 					  		echo "<td class='center'>" .$subsObj->subs[$i]['date'] ."</td>";
 					  		echo "<td class='center '>";
@@ -210,37 +240,7 @@
 					  			echo "<span class='label label-important'>" .$subsObj->subs[$i]['group'][$j]['gp_name'] ."</span> ";
 					  		}
 							echo "</td>";
-					  		?>
-					  		<td class="center ">
-					  				<?php
-										if(isset($accessObj->accessLevel['group-AE']))
-										{
-									?>
-									<a class="btn btn-info" href="#">
-										<i class="icon-plus icon-white"></i>  
-										Add to group                                           
-									</a>
-									<?php 
-					  					}
-										if(isset($accessObj->accessLevel['group-RE']))
-										{
-									?>
-									<a class="btn btn-danger" href="#">
-										<i class="icon-trash icon-white"></i> 
-										Remove from groups
-									</a>
-									<?php
-										} 
-										if(isset($accessObj->accessLevel['email-D']))
-										{
-									?>
-										<a class="btn btn-danger" href="#">
-											<i class="icon-fire icon-white"></i> 
-											Delete
-										</a>
-									<?php } ?>
-							</td>
-					  		<?php 
+					  		echo "<td class='center'></td>";
 					  		echo '</tr>';
 					  	}
 					  
@@ -248,6 +248,29 @@
 							
 						</tbody>
 						</table>
+						</form>
+						<br>
+						<div>
+							<div class="pagination pagination-centered">
+								<ul>
+									<li class='pagin pagin_pre <?php if($subsObj->page == 1)echo " disabled"; ?>' pageno='<?php echo $subsObj->page - 1; ?>'><a href="#">Prev</a></li>
+									<li class='pagin_max' style='display: none' pageno='<?php echo $subsObj->totalPages; ?>'></li>
+									<?php
+										for($i = 1;$i<= $subsObj->totalPages;$i++)
+										{
+											echo '<li class="pagin pagin_ ';
+											if($subsObj->page == $i)echo '  active';
+											echo '" pageno="' .$i .'"><a href="#">' .$i .'</a></li>';
+										}
+									?>
+									<li class='pagin pagin_next <?php if($subsObj->page == $subsObj->totalPages)echo " disabled"; ?>' pageno='<?php echo $subsObj->page + 1; ?>'><a href="#">Next</a></li>
+								</ul>
+								<br>
+								<div class="pagin_loader">
+									<img src="img/ajax-loaders/ajax-loader-7.gif">
+								</div>
+							</div>
+						</div>
 					</div>            
 					</div>
 				</div><!--/span-->

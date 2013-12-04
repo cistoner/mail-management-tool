@@ -8,7 +8,6 @@
  * csq: ADD EMAIL {<email_id>}
  */
 var sendMail = false;
-
 /**
  * function to add email to db
  */
@@ -149,3 +148,62 @@ function validateEmail(email)
 	if( (email.indexOf("@") + 2 ) > email.lastIndexOf(".") ) return false;
 	return true;
 }
+$(document).ready(function(){
+	$("#mailid").click(function(){checkStatus();});
+	//$(".selectallcheckbox").toggle(function(){$('.select').click();},function(){$('.select').click();});
+});
+function checkStatus()
+{
+	if(document.getElementById('mailid').checked)
+	{
+		$("#add_group,#remove_grp,#delete_button").removeClass("disabled");
+	}
+	else $("#add_group,#remove_grp,#delete_button").addClass("disabled");
+}
+/** 
+ * for subscriber page
+ * this will contain ajax request as well
+ */
+ 
+/**
+ * var to store limit value 
+ */
+var limit = 20;
+var pageno = '';
+var key = '';
+$(document).ready(function(){
+	$('.pagin').click(function(){
+		var max = $(".pagin_max").attr('pageno');
+		var pageno = $(this).attr('pageno');
+		if(pageno <= max)
+		{
+			$.post("secure/ajaxserver.php",
+			{
+				retrieve: "true",
+				object: "mailids",
+				limit: limit,
+				page: pageno,
+				key: key
+			},
+			function(result,status){
+				if(status=="success")
+				{
+					if(result != "1001:invalid parameters")
+					{
+						$("#displayTable tbody").html(result);
+						$(".pagin_").removeClass("active");
+						$(".pagin_[pageno='" +pageno +"']").addClass("active");
+						if(pageno == max) $(".pagin_next").addClass("disabled");
+						else $(".pagin_next").removeClass("disabled");
+						$(".pagin_next").attr("pageno",pageno+1);
+						if(pageno == 1) $(".pagin_pre").addClass("disabled");
+						else $(".pagin_pre").removeClass("disabled");
+						$(".pagin_pre").attr("pageno",pageno-1);
+						
+					}
+				}
+			});
+		}
+	});
+
+});
