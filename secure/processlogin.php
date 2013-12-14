@@ -155,6 +155,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
 		if(isset($_SESSION['login_location']))
 		{
 			$location = $_SESSION['login_location'];
+			unset($_SESSION['login_location']);
 			header("location: ../$location");
 			exit;
 		}
