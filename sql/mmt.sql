@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2013 at 07:19 AM
+-- Generation Time: Dec 14, 2013 at 09:14 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -31,13 +31,17 @@ CREATE TABLE IF NOT EXISTS `acl` (
   `accessId` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`accessId`),
   UNIQUE KEY `access` (`access`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `acl`
 --
 
 INSERT INTO `acl` (`access`, `accessId`) VALUES
+('account-A', 24),
+('account-CD', 27),
+('account-D', 26),
+('account-E', 25),
 ('admin-A', 8),
 ('admin-D', 10),
 ('admin-E', 9),
@@ -45,8 +49,10 @@ INSERT INTO `acl` (`access`, `accessId`) VALUES
 ('email-D', 3),
 ('email-E', 2),
 ('group-A', 4),
+('group-AE', 22),
 ('group-D', 6),
 ('group-E', 5),
+('group-RE', 23),
 ('repair-check', 20),
 ('send-B', 12),
 ('send-S', 11),
@@ -57,7 +63,8 @@ INSERT INTO `acl` (`access`, `accessId`) VALUES
 ('theme-A', 16),
 ('theme-D', 18),
 ('theme-E', 17),
-('unsub-dis', 19);
+('unsub-dis', 19),
+('view', 21);
 
 -- --------------------------------------------------------
 
@@ -75,22 +82,56 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `level` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brute-forcelog`
+-- Table structure for table `email_accounts`
 --
 
-CREATE TABLE IF NOT EXISTS `brute-forcelog` (
+CREATE TABLE IF NOT EXISTS `email_accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip-address` varchar(15) NOT NULL,
-  `count` int(11) NOT NULL,
-  `flag` tinyint(1) NOT NULL COMMENT 'TRUE - allowed to access',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'last flagging timestamp',
+  `email` varchar(100) NOT NULL,
+  `date` int(10) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `default` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `group`
+--
+
+CREATE TABLE IF NOT EXISTS `group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  `description` text NOT NULL,
+  `date` int(10) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+
+--
+-- Dumping data for table `group`
+--
+
+INSERT INTO `group` (`id`, `name`, `description`, `date`, `admin_id`) VALUES
+(1, 'all', 'this group will always refer to all registered users', 1383412524, 1);
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `group_subscribers`
+--
+
+CREATE TABLE IF NOT EXISTS `group_subscribers` (
+  `group_id` int(11) NOT NULL,
+  `subscriber_id` int(11) NOT NULL,
+  `date` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -104,7 +145,39 @@ CREATE TABLE IF NOT EXISTS `log` (
   `filename` text NOT NULL,
   `time` int(10) NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=92 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mails`
+--
+
+CREATE TABLE IF NOT EXISTS `mails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` text NOT NULL,
+  `date` int(10) NOT NULL,
+  `recievers` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `email_account_id` int(11) NOT NULL,
+  `sucessful` int(11) NOT NULL DEFAULT '0',
+  `failed` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subscribers`
+--
+
+CREATE TABLE IF NOT EXISTS `subscribers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `date` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
 
 -- --------------------------------------------------------
 
@@ -116,6 +189,8 @@ CREATE TABLE IF NOT EXISTS `useraccess` (
   `userId` int(11) NOT NULL,
   `accessId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
