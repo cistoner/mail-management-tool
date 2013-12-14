@@ -11,6 +11,7 @@ A web application to easily manage your subscribers.
 4.	Send group mails<br>
 5.	link the application to existing tables of subscribers in db<br>
 6.	easily install this tool in your server<br>
+7.	Subscription form UI creator and code generator<br>
 
 
 Extra info
