@@ -5,6 +5,7 @@
 	include 'libs/error.php';
 	include 'libs/db.php';
 	include 'libs/login.php';
+	
 	/** 
 	 * code to check if session already exists 
 	 * and redirect to index.php if it passes authentication result
@@ -39,8 +40,9 @@
 		{
 			case 0:	clearSession(); break;
 			case 1:	clearSession(); break;
-			case 2: header("location: index.php");exit;
-			break;
+			case 2: header("location: index.php");
+					exit;
+					break;
 		}
 		dbase::close_connection();
 	}
@@ -66,6 +68,14 @@
 		$errorMessage = "Invalid Username or Password";
 		if(isset($_GET['message'])) $errorMessage = $_GET['message'];
 	}
+	
+	/**
+	 * code to set login redirect location in case it is session redirect
+	 */
+	 if(isset($_GET['at']))
+	 {
+		$_SESSION['login_location'] = $_GET['at'] .".php";
+	 }
 ?>
 <!DOCTYPE html>
 <html lang="en">

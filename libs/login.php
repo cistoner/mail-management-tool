@@ -35,7 +35,7 @@ class login
 	/**
 	 * time after which a session should expire if not used
 	 */
-	public static $sessionTimeout = 1200;	//12 minutes
+	public static $sessionTimeout = 1200;	//20 minutes
 	
 	/**
 	 * Function to increase the count of 

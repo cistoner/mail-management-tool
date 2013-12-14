@@ -10,6 +10,13 @@ session_start();
 $checkVar = true;
 
 /**
+ * session variable to store last visited page
+ */
+$tempArray = explode("/",$_SERVER['PHP_SELF']);
+$at = str_replace(".php","",$tempArray[count($tempArray)-1]);
+unset($tmpArray);
+
+/**
  * include important libraries here
  */
 include 'config/config.php';
@@ -87,6 +94,7 @@ else
 		session_destroy();
 		log::saveLog("USER DELETED WHEN LOGGED IN ");
 		dbase::close_connection();	
+		
 		header("location: login.php?message=user+does+not+exist+anymore&success=false");
 		exit;	
 	}
@@ -105,7 +113,7 @@ else
 		unset($_SESSION[password_key]);
 		session_destroy();
 		dbase::close_connection();	
-		header("location: login.php?message=session+timeout!++please+login+again&success=false");
+		header("location: login.php?at=$at&message=session+timeout!++please+login+again&success=false");
 		exit;	
 	}
 	

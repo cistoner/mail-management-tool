@@ -146,9 +146,23 @@ if(isset($_POST['username']) && isset($_POST['password']))
 			echo mysql_error();
 			exit;
 		}
-		dbase::close_connection();	
-		header("location: ../index.php");
-		exit;
+		dbase::close_connection();
+		/**
+		 * if it was session time-out login to that location
+		 * from where logot was initiated
+		 * else to index or dashboard
+		 */
+		if(isset($_SESSION['login_location']))
+		{
+			$location = $_SESSION['login_location'];
+			header("location: ../$location");
+			exit;
+		}
+		else
+		{
+			header("location: index.php");
+			exit;
+		}
 	}
 	else
 	{
