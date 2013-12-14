@@ -57,6 +57,10 @@ if(sent('object') && sent('limit') && sent('page') &&sent('key'))
 		$subsObj = new subscribers($limit,$page);
 		$subsObj->getSubscribers($key);
 		$len = count($subsObj->subs);
+		if($len == 0)
+		{
+			echo '<tr class="odd"><td colspan="5" style="text-align: center" > Ooops! Couldn\'t fetch anything usefull!</td></tr>';
+		}
 		for($i = 0; $i<$len; $i++)
 		{
 			echo '<tr class="odd">';

@@ -25,9 +25,9 @@ function addEmail()
 	{
 		if( !validateEmail(email) ) 
 		{
-			$("#addEmailid").attr("value","");
-			$("#addEmailid").attr("placeholder","enter valid email id");
-			return;
+	$("#addEmailid").attr("value","");
+	$("#addEmailid").attr("placeholder","enter valid email id");
+	return;
 		}
 		var csq = "ADD EMAIL {" +email +"}";
 	}
@@ -37,16 +37,16 @@ function addEmail()
 		var i = 0;
 		for(i = 0;i < emails.length;i++)
 		{
-			if(!validateEmail(emails[i]))
-			{
-				$("#addMultEmail").html("");
-				$("#addMultEmail").attr("placeholder","Some of the email were invalid");
-				return;
-			}
+	if(!validateEmail(emails[i]))
+	{
+		$("#addMultEmail").html("");
+		$("#addMultEmail").attr("placeholder","Some of the email were invalid");
+		return;
+	}
 		}
 		while(multiple[multiple.length-1] == ',')
 		{
-			multiple = multiple.substr(0,multiple.length-2);
+	multiple = multiple.substr(0,multiple.length-2);
 		}
 		var csq = "ADD EMAIL {" +multiple +"}";
 	}
@@ -103,31 +103,31 @@ function sendCSQ(csq,outputid,cols)
                     /**
                      * manipulate the feedback
                      */
-					if(result.length)
-					{
-						var rows = result.split('^');
-						var output = "";
-						var i;
-						var j;
-						for(i = 0;i < rows.length - 1;i++)
-						{
-							var colData = rows[i].split('~');
-							output += "<tr>";
-							for(j = 0;j < cols;j++)
-							{
-								console.log(rows[i]);
-								output += "<td>";
-								if(j < colData.length - 1)
-								{
-									output += colData[j];
-								}
-								else output += " -- ";
-								output += "</td>";
-							}
-							output += "</tr>";
-						}
-						$("#" +outputid).prepend(output);
-					}
+			if(result.length)
+			{
+		var rows = result.split('^');
+		var output = "";
+		var i;
+		var j;
+		for(i = 0;i < rows.length - 1;i++)
+		{
+			var colData = rows[i].split('~');
+			output += "<tr>";
+			for(j = 0;j < cols;j++)
+			{
+				console.log(rows[i]);
+				output += "<td>";
+				if(j < colData.length - 1)
+				{
+			output += colData[j];
+				}
+				else output += " -- ";
+				output += "</td>";
+			}
+			output += "</tr>";
+		}
+		$("#" +outputid).prepend(output);
+			}
                     console.log("FEEDBACK: "+result);
                 }
             }
@@ -169,41 +169,117 @@ function checkStatus()
  * var to store limit value 
  */
 var limit = 20;
+
 var pageno = '';
 var key = '';
+function loaderOn(){$(".pagin_loader").fadeIn();}
+function loaderOff(){$(".pagin_loader").fadeOut();}
+
+/**
+ * function to search values by key
+ */
+function searchByKey()
+{
+	key = document.getElementById('subs_search').value;
+	if(key.length != 0){$("#subs_key_reset").fadeIn();}
+	else {$("#subs_key_reset").fadeOut();}
+	pageno = 1;
+	var max = $(".pagin_max").attr('pageno');
+	loaderOn();
+	$.post("secure/ajaxserver.php",
+	{
+		retrieve: "true",
+		object: "mailids",
+		limit: limit,
+		page: pageno,
+		key: key
+	},
+	function(result,status){
+		if(status=="success")
+		{
+			if(result != "1001:invalid parameters")
+			{
+				$("#displayTable tbody").html(result);
+				$(".pagin_").removeClass("active");
+				$(".pagin_[pageno='1']").addClass("active");
+				if(max == 1) $(".pagin_next").addClass("disabled");
+				else $(".pagin_next").removeClass("disabled");
+				$(".pagin_next").attr("pageno",pageno+1);
+				$(".pagin_pre").addClass("disabled");
+				$(".pagin_pre").attr("pageno","-1");
+			}
+			loaderOff();
+		}
+	});
+}
+
+
 $(document).ready(function(){
 	$('.pagin').click(function(){
+		loaderOn();
 		var max = $(".pagin_max").attr('pageno');
 		var pageno = $(this).attr('pageno');
 		if(pageno <= max)
 		{
-			$.post("secure/ajaxserver.php",
+	$.post("secure/ajaxserver.php",
+	{
+		retrieve: "true",
+		object: "mailids",
+		limit: limit,
+		page: pageno,
+		key: key
+	},
+	function(result,status){
+		if(status=="success")
+		{
+			if(result != "1001:invalid parameters")
 			{
-				retrieve: "true",
-				object: "mailids",
-				limit: limit,
-				page: pageno,
-				key: key
-			},
-			function(result,status){
-				if(status=="success")
-				{
-					if(result != "1001:invalid parameters")
-					{
-						$("#displayTable tbody").html(result);
-						$(".pagin_").removeClass("active");
-						$(".pagin_[pageno='" +pageno +"']").addClass("active");
-						if(pageno == max) $(".pagin_next").addClass("disabled");
-						else $(".pagin_next").removeClass("disabled");
-						$(".pagin_next").attr("pageno",pageno+1);
-						if(pageno == 1) $(".pagin_pre").addClass("disabled");
-						else $(".pagin_pre").removeClass("disabled");
-						$(".pagin_pre").attr("pageno",pageno-1);
-						
-					}
-				}
-			});
+		$("#displayTable tbody").html(result);
+		$(".pagin_").removeClass("active");
+		$(".pagin_[pageno='" +pageno +"']").addClass("active");
+		if(pageno == max) $(".pagin_next").addClass("disabled");
+		else $(".pagin_next").removeClass("disabled");
+		$(".pagin_next").attr("pageno",pageno+1);
+		if(pageno == 1) $(".pagin_pre").addClass("disabled");
+		else $(".pagin_pre").removeClass("disabled");
+		$(".pagin_pre").attr("pageno",pageno-1);
+		
+			}
+			loaderOff();
+		}
+	});
 		}
 	});
 
 });
+
+function addAccounts()
+{
+	var username = document.getElementById('addAccount');
+	if(username.value.length == 0)
+	{
+		$('#addAccount').css("border","red 1px solid");
+		return false;
+	}
+	var test  = username.value.replace(/[a-zA-Z0-9-_]/g, "");
+	if(test.length != 0)
+	{
+		$('#addAccount').css("border","red 1px solid");
+		return false;
+	}
+	$('#addAccount').css("border","rgba(0, 0, 0, 0.0745098) 1px solid");
+	$.post("secure/nocsqajaxserver.php",
+	{
+		task: "AddAccount",
+		username: username.value,
+		result: "JSON"
+	},
+	function(result,status){
+		if(result && status == "success" && result != "1003")
+		{
+			$("#displayTable tbody").prepend(result);
+		}
+		else alert("Unable to connect");
+	});
+	console.log('passed');
+}
