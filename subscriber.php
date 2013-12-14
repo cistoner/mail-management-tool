@@ -168,13 +168,12 @@
 					</div>
 					<div class="box-content">
 					<div class="box-content">
-						<div class="input-append" style="display: inline;width: 30%;float: left">
-							<form action="" method="post">
-								<input id="appendedInputButton subs_search" name="subs_search" size="16" type="text">
-								<button class="btn" type="button">Search!</button>
-							</form>
+						<div class="input-append" style="display: inline;width: 40%;float: left">
+								<input id="subs_search" name="subs_search" size="16" type="text">
+								<button class="btn" type="button" onclick="searchByKey()">Search!</button>
+								<button class="btn" type="button" id="subs_key_reset" style="display: none" onclick="document.getElementById('subs_search').value='';searchByKey();">Reset!</button>
 						</div>	
-						<div style="display: inline;width: 40%;float: right">
+						<div style="display: inline;width: 40%;float: right;text-align: right">
 							<?php
 							if(isset($accessObj->accessLevel['group-AE']))
 							{
@@ -185,15 +184,6 @@
 							</a>
 							<?php 
 							}
-							if(isset($accessObj->accessLevel['group-RE']))
-							{
-							?>
-							<a class="btn btn-danger disabled" id="remove_grp" href="#"  onclick="javascript: document.getElementById('task').value = 'REMOVE_GROUP';document.forms['emails'].submit();">
-							<i class="icon-trash icon-white"></i> 
-							Remove from groups
-							</a>
-							<?php
-							} 
 							if(isset($accessObj->accessLevel['email-D']))
 							{
 							?>
