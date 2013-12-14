@@ -9,6 +9,11 @@
 	header("location: ../../index.php");
 	exit;
  }
- define("username_key","");
- define("password_key","");
- define("password_salt","temporarypasswordsalt");
+define("HOST","localhost");
+define("USER","root");
+define("PASSWORD","");
+define("_DB_MAIN","mmt");
+define("username_key",md5("mmt_username"));
+define("password_key",md5("mmt_password"));
+define("password_salt","temporarypasswordsalt");
+define("domain","cistoner.org");
