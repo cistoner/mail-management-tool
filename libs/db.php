@@ -32,7 +32,7 @@ class dbase{
 			mysql_close(self::$con);
 		}
 	}
-}
+};
 
 
 ?>

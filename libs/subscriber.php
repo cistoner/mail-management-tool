@@ -70,7 +70,7 @@ class subscribers
 		$prefix = "";
 		if($key)
 		{
-			$prefix = "WHERE email LIKE %" .$key ."%";
+			$prefix = "WHERE email LIKE '%" .$key ."%' ";
 		}
 		
 		$query = mysql_query("SELECT * FROM subscribers " .$prefix ."LIMIT $this->limit OFFSET $this->offset");

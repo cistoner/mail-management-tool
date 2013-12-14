@@ -45,6 +45,7 @@ class BasePassword
 		}, str_split($string, 1)));
 		return preg_match('#(.)(.\1){' . ($length - 1) . '}#', $str)==true;
 	}
+
 	/**
 	 * Checks for patterns of keyboard keys in a string
 	 * @param string $string
@@ -61,6 +62,7 @@ class BasePassword
 		}, str_split($string, 1)));
 		return preg_match('#(.)(.\1){' . ($length - 1) . '}#', $str)==true;
 	}
+
 	/**
 	 * Determines strength of a password
 	 * Generally something above .3 is acceptable and above .5 is strong
