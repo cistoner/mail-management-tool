@@ -37,22 +37,26 @@ class login
 	 */
 	public static $sessionTimeout = 1200;	//20 minutes
 	
+	/**
+	 * function to retrun IP address of user
+	 */ 
 	public static function getIP()
 	{
-	 		foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key)
-		    {
-		        if (array_key_exists($key, $_SERVER) === true)
-		        {
-		            foreach (array_map('trim', explode(',', $_SERVER[$key])) as $ip)
-		            {
-		                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false)
-		                {
-		                    return $ip;
-		                }
-		            }
-		        }
-		    }
+		foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key)
+		{
+			if (array_key_exists($key, $_SERVER) === true)
+			{
+				foreach (array_map('trim', explode(',', $_SERVER[$key])) as $ip)
+				{
+					if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false
+					{
+						return $ip;
+					}
+				}
+			}
+		}
 	}
+	
 	/**
 	 * Function to increase the count of 
 	 * login failure count by one in session
@@ -66,20 +70,20 @@ class login
 			return;	
 		}
 		$_SESSION['failure'] = $_SESSION['failure'] + 1;
+		
 		/*
-		 $ip = getIP();
-		 dbase::start_connection();
-		 $query = mysql_query("SELECT id FROM `brute_forcelog` WHERE `ip-address`='$ip'") or throw new dbError("");
-		 if(mysql_num_rows($query)>0)
-		 {
-		 	$row = mysql_fetch_array($query);
-		 	$query = mysql_query("UPDATE brute_forcelog SET `count`=`count`+1 WHERE `id`=".$row['id']."");
-		 } 
-		 else
-		 {
-		 	$query = mysql_query("INSERT brute_forcelog (`ip-address`,`count`) VALUES ('$ip',1)");
-		 }
-		 */
+		$ip = getIP();
+		$query = mysql_query("SELECT id FROM `brute_forcelog` WHERE `ip-address`='$ip'") or throw new dbError("");
+		if(mysql_num_rows($query)>0)
+		{
+			$row = mysql_fetch_array($query);
+			$query = mysql_query("UPDATE brute_forcelog SET `count`=`count`+1 WHERE `id`=".$row['id']."");
+		} 
+		else
+		{
+			$query = mysql_query("INSERT brute_forcelog (`ip-address`,`count`) VALUES ('$ip',1)");
+		}
+		*/
 	}
 	
 	/**
