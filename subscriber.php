@@ -47,7 +47,7 @@
 	<link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
 	<link href='css/opa-icons.css' rel='stylesheet'>
 	<link href='css/uploadify.css' rel='stylesheet'>
-
+	<link href="css/mmt.css" rel="stylesheet">
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -200,14 +200,20 @@
 						<div class="row-fluid">
 						<form name="emails" action="" id="emails" method="post" onsubmit="javascript:if(document.getElementById('task').value=='')return false;" >
 						<input type="hidden" value="" name="task" id="task">
+						<style type="text/css">
+							
+						</style>
+						
 						<table class="table table-striped table-bordered" id="displayTable" aria-describedby="">
 						  <thead>
 							<tr role="row">
 								<th class="sorting_asc" style="width: 40px;">
-									<!-- <input type="checkbox" id="mailid" class="selectallcheckbox"> -->
+									<!--
+									<span title='click to select' class='icon32 icon-mail-closed' onclick="$('#displayTable tbody tr[active=true]').click();"></span>
+									-->
 								</th>
 								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 201px;"> Email</th>
-								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending" style="width: 199px;">Date registered</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending" style="width: 30%;">Date registered</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 96px;">Groups</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 378px;">Actions</th>
 							</tr>
@@ -218,8 +224,8 @@
 					  	$len = count($subsObj->subs);
 					  	for($i = 0; $i<$len; $i++)
 					  	{
-					  		echo '<tr class="odd">';
-							echo "<td><input type='checkbox' name='id[]' id='mailid' class='select' value='" .$subsObj->subs[$i]['id'] ."'></td>";
+					  		echo '<tr class="odd" id_="' .$subsObj->subs[$i]['id'] .'">';
+							echo "<td class='selector_icon'><span title='click to select' class='icon32 icon-mail-closed'></span></td>";
 					  		echo "<td class='sorting_'>" .$subsObj->subs[$i]['email'];
 							echo "</td>";
 					  		echo "<td class='center'>" .$subsObj->subs[$i]['date'] ."</td>";
@@ -358,8 +364,6 @@
 	<!-- history.js for cross-browser state change on ajax -->
 	<script src="js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
-	<script src="js/charisma.js"></script>
-	
-		
+	<script src="js/charisma.js"></script>	
 </body>
 </html>

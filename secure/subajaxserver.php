@@ -63,8 +63,8 @@ if(sent('object') && sent('limit') && sent('page') &&sent('key'))
 		}
 		for($i = 0; $i<$len; $i++)
 		{
-			echo '<tr class="odd">';
-			echo "<td><input type='checkbox' name='id[]' id='mailid' class='select' value='" .$subsObj->subs[$i]['id'] ."'></td>";
+			echo '<tr class="odd" id_="' .$subsObj->subs[$i]['id'] .'">';
+			echo "<td class='selector_icon'><span title='click to select' class='icon32 icon-mail-closed'></span></td>";
 			echo "<td class='sorting_'>" .$subsObj->subs[$i]['email'];
 			echo "</td>";
 			echo "<td class='center'>" .$subsObj->subs[$i]['date'] ."</td>";
