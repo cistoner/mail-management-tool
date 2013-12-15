@@ -48,7 +48,7 @@ class login
 			{
 				foreach (array_map('trim', explode(',', $_SERVER[$key])) as $ip)
 				{
-					if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false
+					if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false)
 					{
 						return $ip;
 					}
