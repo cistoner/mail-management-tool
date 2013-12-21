@@ -283,55 +283,38 @@ function addAccounts()
 	});
 	console.log('passed');
 }
-
-/** 
- * for email list selection and bulk action
+/**
+ * for selecting anddeselecting entries in display table
  */
 var selectedIds = new Array();
-	var selectedIdsLength = 0;
-		$(document).ready(function(){
-			$("tr").toggle(function(){
-				$(this).addClass("selected");
-				$(this).attr("active","true");
-				var childObj = $(this).children('.selector_icon').children('span');
-				childObj.attr("title","Click to unselect");
-				childObj.removeClass("icon-mail-closed");
-				childObj.addClass("icon-check");
-				/**
-				 * for adding this id to selected array
-				 */
-				var id = $(this).attr("id_");
-				selectedIds[selectedIdsLength] = id;
-				selectedIdsLength++;
-				if(selectedIdsLength == 1)
-				{
-					$("#add_group,#delete_button").removeClass("disabled");
-				}
-				},function(){
-				$(this).removeClass("selected");
-				$(this).removeAttr("active");
-				var childObj = $(this).children('.selector_icon').children('span');
-				childObj.attr("title","Click to select");
-				childObj.removeClass("icon-check");
-				childObj.addClass("icon-mail-closed");
-				/**
-				 * code to remove this id from selected array
-				 */
-				var id = $(this).attr("id_");
-				var i = 0;
-				var flag = false;
-				for(i = 0;i<selectedIdsLength;i++)
-				{
-					if(flag)
-					{
-						selectedIds[i-1] = selectedIds[i]; 
-					}
-					if(selectedIds[i] == id)	flag = true;
-				}
-				selectedIdsLength--;
-				if(selectedIdsLength == 0)
-				{
-					$("#add_group,#delete_button").addClass("disabled");
-				}
-			});
+	var selectedIdsCount = 0;
+	$(document).ready(function(){
+		$("#displayTable tbody tr").toggle(function(){
+			/**
+			 * selecting
+			 */
+			$(this).addClass("selected");
+			var id = $(this).attr("id_");
+			selectedIds[selectedIdsCount] = id;
+			selectedIdsCount++;
+			var obj = $(this).children(".selector_icon").children("img");
+			obj.attr("title","click to deselect");
+			obj.attr("src","img/hector09/ok_.png");
+			if(selectedIdsCount == 1){$("#add_group,#delete_button").removeClass("disabled");}
+		},function(){
+			$(this).removeClass("selected");
+			var id = $(this).attr("id_");
+			var i;
+			var flag = false;
+			for(i = 0;i<selectedIdsCount;i++)
+			{
+				if(flag){selectedIds[i-1] = selectedIdsCount[i];}
+				else if(selectedIds[i] == id){flag = true;}
+			}
+			selectedIds--;
+			var obj = $(this).children(".selector_icon").children("img");
+			obj.attr("title","click to select");
+			obj.attr("src","img/hector09/ok.png");
+			if(selectedIdsCount == 0){$("#add_group,#delete_button").addClass("disabled");}
 		});
+	});
