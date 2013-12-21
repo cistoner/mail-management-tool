@@ -155,13 +155,14 @@ if(isset($_POST['username']) && isset($_POST['password']))
 		if(isset($_SESSION['login_location']))
 		{
 			$location = $_SESSION['login_location'];
+			if(!$location){$location = "index.php";}
 			unset($_SESSION['login_location']);
 			header("location: ../$location");
 			exit;
 		}
 		else
 		{
-			header("location: index.php");
+			header("location: ../index.php");
 			exit;
 		}
 	}
