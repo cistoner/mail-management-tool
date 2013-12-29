@@ -15,7 +15,8 @@
 			<li><a class="ajax-link" href="subscriber.php"><i class="icon-user"></i><span class="hidden-tablet"> Subscriber </span></a></li>
 			<li><a class="ajax-link" href="groups.php"><i class="icon-briefcase"></i><span class="hidden-tablet"> Groups </span></a></li>
 			<li><a class="ajax-link" href="accounts.php"><i class="icon-font"></i><span class="hidden-tablet"> Accounts </span></a></li>
-			<li><a class="ajax-link" href="#"><i class="icon-eye-open"></i><span class="hidden-tablet"> Sample </span></a></li>
+			<li><a class="ajax-link" href="mail.php"><i class="icon-envelope"></i><span class="hidden-tablet"> Mail Sender </span></a></li>
+			
 		</ul>
 	</div><!--/.well -->
 </div><!--/span-->

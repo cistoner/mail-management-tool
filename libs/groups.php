@@ -79,6 +79,24 @@ class group
 		unset($subrow);
 		unset($subquery);
 	}
+	public function getMailingList()
+	{
+		$query = mysql_query("SELECT group.id,group.name,group.description,admin.username FROM `group` INNER JOIN `admin` ON group.admin_id = admin.id WHERE admin.username = '".$_SESSION[username_key]."'") or die(mysql_error());
+		while($row = mysql_fetch_array($query))
+		{
+			$this->grp[$row['name']]['name'] = $row['name'];
+			$this->grp[$row['name']]['id'] = $row['id'];
+			$this->grp[$row['name']]['description'] = $row['description'] ."<br><span class='label label-important'> &nbsp;Added by " .$row['username'] ."&nbsp; </span>";
+			
+			$subquery = mysql_query("SELECT subscribers.email FROM `group_subscribers` INNER JOIN `subscribers` ON group_subscribers.subscriber_id = subscribers.id  WHERE group_subscribers.group_id = '" .$row['id'] ."'") or die(mysql_error());
+			$email_string="";
+			while($subrow = mysql_fetch_array($subquery))
+			{
+				$email_string .= $subrow['email']."- -";
+			}
+			$this->grp[$row['name']]['emails'] = $email_string;
+		}
+	}
 	
 };
  
