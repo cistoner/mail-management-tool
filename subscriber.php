@@ -1,5 +1,7 @@
 <?php
 	include 'include_this.php';
+	include 'libs/groups.php';
+	
 	/**
 	 * task: get list of subscribers from db
 	 */
@@ -14,7 +16,13 @@
 	 * function to get latest 10 subscribers
 	 */
 	$latestSubs = subscribers::getLatestSubscribers();
-
+	
+	/**
+	 * to get groups data
+	 */
+	$grpObj = new group();
+	$grpObj->getGroups();
+	
 	dbase::close_connection();
 ?>
 <!DOCTYPE html>
@@ -178,16 +186,15 @@
 							if(isset($accessObj->accessLevel['group-AE']))
 							{
 							?>
-							<a class="btn btn-info disabled" id="add_group" href="#" onclick="javascript: document.getElementById('task').value = 'ADD_GROUP';document.forms['emails'].submit();">
-								<i class="icon-plus icon-white"></i>  
-								Add to group                                           
+							<a class="btn btn-info disabled" id="add_group" href="#" onclick="javascript: addtogroupAction()">
+								<i class="icon-plus icon-white"></i> Add to group                                           
 							</a>
 							<?php 
 							}
 							if(isset($accessObj->accessLevel['email-D']))
 							{
 							?>
-								<a class="btn btn-danger disabled" href="#" id="delete_button" onclick="javascript: document.getElementById('task').value = 'REMOVE';document.forms['emails'].submit();">
+								<a class="btn btn-danger disabled" href="#" id="delete_button" onclick="javascript: deleteSelectedIds()">
 								<i class="icon-fire icon-white"></i> 
 								Delete
 								</a>
@@ -195,27 +202,46 @@
 						</div>
 						
 						<div class="clearfix"></div>
+						<div class="addtogroup">
+							<div class="group_list">
+								<?php
+								$len = count($grpObj->grp);
+								for($i = 0;$i < $len;$i++)
+								{
+									echo "<div groupid='" .$grpObj->grp[$i]['id'] ."'>" .$grpObj->grp[$i]['name'] ."</div>";
+								}
+								?>
+							</div>	
+							<div class="clearfix"></div>
+						</div>
+						
+						<div class="clearfix"></div>
 					</div>
 						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid">
 						<div class="row-fluid">
-						<form name="emails" action="" id="emails" method="post" onsubmit="javascript:if(document.getElementById('task').value=='')return false;" >
-						<input type="hidden" value="" name="task" id="task">
 						<style type="text/css">
-							
+						#tick_img{
+							-webkit-transition: -webkit-transform .4s;
+						}	
+						#tick_img:hover
+						{
+							-webkit-transform: rotate(360deg);
+						}
 						</style>
 						
 						<table class="table table-striped table-bordered" id="displayTable" aria-describedby="">
 						  <thead>
 							<tr role="row">
-								<th class="sorting_asc" style="width: 40px;">
+								<th class="sorting_asc" style="width: 22px;">
 									<!--
 									<span title='click to select' class='icon32 icon-mail-closed' onclick="$('#displayTable tbody tr[active=true]').click();"></span>
 									-->
+									<img title="Select All" src="img/hector09/ok.png" width="20px" id="checkAll">
 								</th>
-								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 201px;"> Email</th>
+								<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Username: activate to sort column descending" style="width: 25%;"> Email</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date registered: activate to sort column ascending" style="width: 30%;">Date registered</th>
-								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 96px;">Groups</th>
-								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 378px;">Actions</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Role: activate to sort column ascending" style="width: 30%">Groups</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending">Actions</th>
 							</tr>
 						  </thead>   
 						  
@@ -224,8 +250,8 @@
 					  	$len = count($subsObj->subs);
 					  	for($i = 0; $i<$len; $i++)
 					  	{
-					  		echo '<tr class="odd" id_="' .$subsObj->subs[$i]['id'] .'">';
-							echo "<td class='selector_icon'><span title='click to select' class='icon32 icon-mail-closed'></span></td>";
+					  		echo '<tr class="odd" id_="' .$subsObj->subs[$i]['id'] .'" check="false">';
+							echo "<td class='selector_icon'><img id='tick_img' title='click to select' src='img/hector09/ok.png' width='20px'></td>";
 					  		echo "<td class='sorting_'>" .$subsObj->subs[$i]['email'];
 							echo "</td>";
 					  		echo "<td class='center'>" .$subsObj->subs[$i]['date'] ."</td>";
@@ -244,7 +270,6 @@
 							
 						</tbody>
 						</table>
-						</form>
 						<br>
 						<div>
 							<div class="pagination pagination-centered">
@@ -365,5 +390,9 @@
 	<script src="js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>	
+	<script>
+	
+	
+	</script>
 </body>
 </html>

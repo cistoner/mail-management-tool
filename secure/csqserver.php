@@ -129,7 +129,6 @@ if($isDientityModel)
     /**
      * for 2-degree CSQ
      */
-
     /**
      * this will serve as index for array in file ds.php
      */
@@ -204,15 +203,18 @@ else {
 			/**
 			 * for feedback
 			 */
-			$query = str_replace("ielem",$array[0][$i],$feedbackQuery[$index]);
-			$query = mysql_query($query);
-			if(!$query)push(mysql_error(),$errors);
-			else
+			if(isset($feedbackQuery[$index]))
 			{
-				$row = mysql_fetch_array($query);
-				$len = count($row)/2;
-				for($i = 0;$i<$len;$i++){$output .= $row[$i] ."~";}
-				$output .= "^";
+				$query = str_replace("ielem",$array[0][$i],$feedbackQuery[$index]);
+				$query = mysql_query($query);
+				if(!$query)push(mysql_error(),$errors);
+				else
+				{
+					$row = mysql_fetch_array($query);
+					$len = count($row)/2;
+					for($i = 0;$i<$len;$i++){$output .= $row[$i] ."~";}
+					$output .= "^";
+				}
 			}
 		}
 }
@@ -221,6 +223,8 @@ else {
  * code to send the feedback from here after
  * generating it
  */
- echo $output;
+if($output != "")
+	echo $output;
+else echo 1;
 
 ?>

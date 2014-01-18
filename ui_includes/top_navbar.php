@@ -7,6 +7,18 @@
  * (c) Cistoner Inc.
  */
 ?>
+<ul class="noty_cont noty_layout_topLeft">
+	<li>
+		<div class="noty_bar noty_theme_default noty_layout_topLeft noty_success" id="noty_section" style="cursor: pointer; display: none;">
+			<div class="noty_message">
+				<span class="noty_text">
+					
+				</span>
+			</div>
+		</div>
+	</li>
+</ul>
+
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container-fluid">

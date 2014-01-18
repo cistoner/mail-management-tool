@@ -24,7 +24,7 @@ function newLine(){return "<br>" .PHP_EOL;}
 /**
  * test string
  */
-$string = "ADD EMAIL {1,3,4,5} TO GROUP {2,3}";
+$string = "EDIT EMAIL {minhaz@cistoner.org} TO EMAIL {mikky@cistoner.org}";
 echo "CSQ = " .$string .newLine();
 /**
  * these two array will be used to load up

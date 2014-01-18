@@ -35,6 +35,23 @@ include '../libs/groups.php';
 include '../libs/mail.php';
 
 /**
+ * for retrieving all access for this user
+ */
+$accessObj = new access($_SESSION['id']);
+
+/*
+ * ignoring the noacess case for now
+ */
+try
+{
+	$accessObj->getAccessFromDB();
+}
+catch(noAccess $ex)
+{
+	/* do nothig for now */		
+}
+
+/**
  * function to check if any data was sent as post
  */
 function sent($param)
@@ -43,6 +60,9 @@ function sent($param)
 	return false;
 }
 
+/**
+ * for searching and pagination
+ */
 if(sent('object') && sent('limit') && sent('page') &&sent('key'))
 {
 	$obj = $_POST['object'];
@@ -63,8 +83,8 @@ if(sent('object') && sent('limit') && sent('page') &&sent('key'))
 		}
 		for($i = 0; $i<$len; $i++)
 		{
-			echo '<tr class="odd" id_="' .$subsObj->subs[$i]['id'] .'">';
-			echo "<td class='selector_icon'><span title='click to select' class='icon32 icon-mail-closed'></span></td>";
+			echo '<tr class="odd" id_="' .$subsObj->subs[$i]['id'] .'" check="false">';
+			echo "<td class='selector_icon'><img id='tick_img' title='click to select' src='img/hector09/ok.png' width='20px'></td>";
 			echo "<td class='sorting_'>" .$subsObj->subs[$i]['email'];
 			echo "</td>";
 			echo "<td class='center'>" .$subsObj->subs[$i]['date'] ."</td>";
@@ -86,4 +106,42 @@ if(sent('object') && sent('limit') && sent('page') &&sent('key'))
 	dbase::close_connection();
 	exit;
 }
+
+/**
+ * for deleting ids from db
+ */
+if( sent('object') && sent('ids') && sent('task') ) 
+{
+	$task = $_POST['task'];
+	$ids = $_POST['ids'];
+	switch($task)
+	{
+		case "delete": 
+			if(isset($accessObj->accessLevel['email-D']) && $accessObj->accessLevel['email-D'] === true )
+			{
+				$arr = explode("_",$ids);
+				$len = count($arr);
+				dbase::start_connection();
+				foreach($arr as $id)
+				{
+					if($id)
+					{
+						$query = mysql_query("DELETE FROM subscribers WHERE id = '$id';");	
+						if(!$query){echo mysql_error();exit;}
+					}
+				}
+				dbase::close_connection();
+				echo 1;
+				exit;
+			}
+			else
+			{
+				echo "You do not have required access!";
+				exit;
+			}
+			break;
+		default: echo "Unknown header!";exit;break;
+	}
+}
+
 ?>

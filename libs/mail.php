@@ -8,7 +8,7 @@ if(!isset($checkVar))
 	header("location: ../../index.php");
 	exit;
 }
- include 'class.phpmailer.php';
+ 
  /*
   * class to send a single mail, frame a mail , save mail UI to file
  */
@@ -23,11 +23,6 @@ class mail
 		$query = mysql_query("SELECT count(*) FROM mails;");
 		$row = mysql_fetch_array($query);
 		return ($row[0]);
-	}
-	public static function sendMail($subject , $recipient , $text , $attachement="default image url" , $sender="admin@mmt.org")
-	{			
-				
-
 	}
 };
  

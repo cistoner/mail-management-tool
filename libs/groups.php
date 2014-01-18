@@ -79,6 +79,7 @@ class group
 		unset($subrow);
 		unset($subquery);
 	}
+	
 	public function getMailingList()
 	{
 		$query = mysql_query("SELECT group.id,group.name,group.description,admin.username FROM `group` INNER JOIN `admin` ON group.admin_id = admin.id WHERE admin.username = '".$_SESSION[username_key]."'") or die(mysql_error());

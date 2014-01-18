@@ -18,7 +18,7 @@ $time = time();
  * this types of queries work for 1-degree and 2-degree CSQ
  */
 $sqlstruct = array(
-	"ADD_EMAIL_GROUP" => "INSERT INTO 'group_subscriber' ('user_id', 'group_id') VALUES ('ielem','jelem');",
+	"ADD_EMAIL_GROUP" => "INSERT INTO `group_subscribers`(`group_id`, `subscriber_id`, `date`) VALUES ('jelem','ielem','$time')",
 	"ADD_EMAIL" => "INSERT INTO `subscribers`(`email`, `date`) VALUES ('ielem','$time');",
 	"REMOVE_EMAIL" => "DELETE s,g FROM subscribers s INNER JOIN group_subscribers g ON g.subscriber_id = s.id WHERE s.id = 'ielem'; ",
 	"REMOVE_EMAIL_GROUP" => "DELETE FROM 'group_subscriber' WHERE user_id = 'ielem' AND group_id = 'jelem';",
